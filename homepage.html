@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Graceful Gatherings</title>
+    <link rel="stylesheet" href="homepage.css" />
+</head>
+<body>
+    <div class="hover-trigger"></div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Graceful Gatherings</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="homepage.php" class="nav-item active">Home</a>
+                <a href="catalog.php" class="nav-item">Catalog</a>
+                <a href="cart.html" class="nav-item">Shopping Cart</a>
+                <a href="History.html" class="nav-item">Purchase History</a>
+                <a href="appointment.html" class="nav-item">Make an Appointment</a>
+                <a href="profile.html" class="nav-item">My Profile</a>
+                <a href="login.php" class="nav-item">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="tab-content active">
+                <h2>Homepage</h2>
+            </div>
+            <div class="content">
+                <div class="hero-section">
+                    <img src="https://assets.vogue.com/photos/6457fe35c943a2672e3e6c65/master/w_1600%2Cc_limit/vg-125.jpg" alt="Wedding Bouquet" />
+                    <div class="hero-content">
+                        <h1 class="hero-title">The Gift of Life</h1>
+                        <p class="hero-text">
+                            Love doesn't make the world go around...Love is what makes the world worthwhile!
+                        </p>
+                        <button class="btn-primary">
+                            Click to View More
+                        </button>
+                    </div>
+
+                </div>
+                        <div class="featured-products">
+                        <h2>Featured Products</h2>
+                        <button class="carousel-button prev" onclick="scrollCarousel(-1)">←</button>
+                        <button class="carousel-button next" onclick="scrollCarousel(1)">→</button>
+                        <div class="product-carousel" id="productCarousel">
+                        <div class="product-card">
+                            <img src="/api/placeholder/200/200" alt="Wedding Dress" class="product-image">
+                            <h3 class="product-title">Elegant Wedding Dress</h3>
+                            <p class="product-price">$1,999</p>
+                            <button class="product-button">View Details</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="/api/placeholder/200/200" alt="Wedding Ring" class="product-image">
+                            <h3 class="product-title">Diamond Wedding Ring</h3>
+                            <p class="product-price">$2,499</p>
+                            <button class="product-button">View Details</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="/api/placeholder/200/200" alt="Bouquet" class="product-image">
+                            <h3 class="product-title">Premium Bridal Bouquet</h3>
+                            <p class="product-price">$299</p>
+                            <button class="product-button">View Details</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="/api/placeholder/200/200" alt="Tiara" class="product-image">
+                            <h3 class="product-title">Crystal Tiara</h3>
+                            <p class="product-price">$399</p>
+                            <button class="product-button">View Details</button>
+                        </div>
+                        <div class="product-card">
+                            <img src="/api/placeholder/200/200" alt="Veil" class="product-image">
+                            <h3 class="product-title">Lace Wedding Veil</h3>
+                            <p class="product-price">$199</p>
+                            <button class="product-button">View Details</button>
+                        </div>
+            </div>
+            </div>
+            <div>
+            <div class="tab-content">
+            <h2>About Us</h2>
+                </div>
+                <div class="context"
+                <p>
+                    At Graceful Gathering, we believe every wedding deserves elegance and heart. 
+                    We’re here to make your celebration special, with a curated collection of bridal accessories, decor, and 
+                    essentials designed to reflect your unique love story. Our handpicked items combine quality with charm, 
+                    making it easy for you to plan a day you’ll cherish forever.
+                    Thank you for letting us be part of your journey. Here’s to love, beauty, and unforgettable moments.
+                    With love,
+                    The Graceful Gathering Team.
+                </p>
+                
+             </div>
+             
+                </div>
+            </div>
+        </div>
+        </main>
+
+        </main>
+        <footer class="footer">
+    <p>This website is a fictional project created for educational purposes as part of a university course.</p>
+    <p>@-Not a Real Business</p>
+</footer>
+    </div>
+    <script>
+        // Add this JavaScript to load products
+document.addEventListener('DOMContentLoaded', function() {
+    loadFeaturedProducts();
+});
+
+function loadFeaturedProducts() {
+    fetch('get_featured_products.php')
+        .then(response => response.json())
+        .then(products => {
+            const carousel = document.getElementById('productCarousel');
+            carousel.innerHTML = ''; // Clear existing content
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${parseFloat(product.price).toFixed(2)}</p>
+                        <button class="product-button" onclick="viewProduct(${product.id})">View Details</button>
+                    </div>
+                `;
+                carousel.innerHTML += productCard;
+            });
+        })
+        .catch(error => console.error('Error loading products:', error));
+}
+// change the .php file to product.php
+function viewProduct(productId) {
+    // Implement product detail view navigation
+    window.location.href = `product-detail.php?id=${productId}`;
+}
+
+function scrollCarousel(direction) {
+    const carousel = document.getElementById('productCarousel');
+    const scrollAmount = 270; // Width of product card + gap
+    carousel.scrollLeft += scrollAmount * direction;
+}
+</script>
+</body>
+</html>

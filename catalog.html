@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog - Graceful Gatherings</title>
+    <link rel="stylesheet" href="catalog.css" />
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="hover-trigger"></div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Graceful Gatherings</h2>
+            </div>
+            <nav class="sidebar-nav">
+            <a href="homepage.html" class="nav-item active">Home</a>
+            <a href="catalog.html" class="nav-item active">Catalog</a>
+            <a href="cart.html" class="nav-item">Shopping Cart</a>
+            <a href="History.html" class="nav-item">Purchase History</a>
+            <a href="appointment.html" class="nav-item">Make an Appointment</a>
+            <a href="profile.html" class="nav-item">My Profile</a>
+            <a href="login.html" class="nav-item">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="catalog-header">
+                <h1>Wedding Essentials Catalog</h1>
+                <div class="search-and-sort">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search for products...">
+                        <button class="search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="catalog-container">
+                <div class="filters">
+                    <div class="filter-section">
+                        <h3>Categories</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="dresses">
+                            <label for="dresses">Wedding Dresses</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="accessories">
+                            <label for="accessories">Accessories</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="decorations">
+                            <label for="decorations">Decorations</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h3>Price Range</h3>
+                        <div class="price-range">
+                            <button class="price-button active">All Prices</button>
+                            <button class="price-button">Under $100</button>
+                            <button class="price-button">$100 - $500</button>
+                            <button class="price-button">$500 - $1,000</button>
+                            <button class="price-button">$1,000 - $2,000</button>
+                            <button class="price-button">$2,000 - $5,000</button>
+                            <button class="price-button">Above $5,000</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-grid">
+                    <div class="product-card">
+                        <img src="/api/placeholder/200/200" alt="Wedding Dress" class="product-image">
+                        <div class="product-details">
+                            <h3 class="product-title">Elegant Lace Wedding Dress</h3>
+                            <p class="product-price">$1,999</p>
+                            <button class="view-details-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="/api/placeholder/200/200" alt="Wedding Ring" class="product-image">
+                        <div class="product-details">
+                            <h3 class="product-title">Diamond Wedding Ring Set</h3>
+                            <p class="product-price">$2,499</p>
+                            <button class="view-details-btn">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img src="/api/placeholder/200/200" alt="Bouquet" class="product-image">
+                        <div class="product-details">
+                            <h3 class="product-title">Rose Bridal Bouquet</h3>
+                            <p class="product-price">$299</p>
+                            <button class="view-details-btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="page-button">≪</button>
+                <button class="page-button">←</button>
+                <button class="page-button active">1</button>
+                <button class="page-button">2</button>
+                <button class="page-button">3</button>
+                <span class="page-ellipsis">...</span>
+                <button class="page-button">10</button>
+                <button class="page-button">→</button>
+                <button class="page-button">≫</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>This website is a fictional project created for educational purposes as part of a university course.</p>
+            <p>@-Not a Real Business</p>
+        </footer>
+    </div>
+            <script>
+                let currentPage = 1;
+                const totalPages = 10;
+        
+                function changePage(page) {
+                    if (page < 1 || page > totalPages) return;
+                    
+                    currentPage = page;
+                    updatePagination();
+                    // Here you would typically fetch and update the product list
+                    console.log(`Loading page ${page}`);
+                }
+        
+                function updatePagination() {
+                    const pagination = document.querySelector('.pagination');
+                    pagination.innerHTML = '';
+        
+                    // First and Previous buttons
+                    pagination.appendChild(createPageButton('≪', 1, 'First page'));
+                    pagination.appendChild(createPageButton('←', currentPage - 1, 'Previous page'));
+        
+                    // Page numbers
+                    let startPage = Math.max(1, currentPage - 2);
+                    let endPage = Math.min(totalPages, startPage + 4);
+        
+                    if (endPage - startPage < 4) {
+                        startPage = Math.max(1, endPage - 4);
+                    }
+        
+                    // Add first page if needed
+                    if (startPage > 1) {
+                        pagination.appendChild(createPageButton('1', 1));
+                        if (startPage > 2) {
+                            pagination.appendChild(createEllipsis());
+                        }
+                    }
+        
+                    // Add page numbers
+                    for (let i = startPage; i <= endPage; i++) {
+                        pagination.appendChild(createPageButton(i.toString(), i, '', i === currentPage));
+                    }
+        
+                    // Add last page if needed
+                    if (endPage < totalPages) {
+                        if (endPage < totalPages - 1) {
+                            pagination.appendChild(createEllipsis());
+                        }
+                        pagination.appendChild(createPageButton(totalPages.toString(), totalPages));
+                    }
+        
+                    // Next and Last buttons
+                    pagination.appendChild(createPageButton('→', currentPage + 1, 'Next page'));
+                    pagination.appendChild(createPageButton('≫', totalPages, 'Last page'));
+                }
+        
+                function createPageButton(text, page, title = '', isActive = false) {
+                    const button = document.createElement('button');
+                    button.className = `page-button${isActive ? ' active' : ''}`;
+                    button.textContent = text;
+                    if (title) button.title = title;
+                    button.onclick = () => changePage(page);
+                    button.disabled = page < 1 || page > totalPages;
+                    return button;
+                }
+        
+                function createEllipsis() {
+                    const span = document.createElement('span');
+                    span.className = 'page-ellipsis';
+                    span.textContent = '...';
+                    return span;
+                }
+        
+                // Initialize the sort functionality
+                document.getElementById('sort').addEventListener('change', function(e) {
+                    const sortValue = e.target.value;
+                    console.log(`Sorting by: ${sortValue}`);
+                    // Here you would implement the sorting logic
+                });
+        
+                // Initialize pagination
+                updatePagination();
+
+
+
+                const priceButtons = document.querySelectorAll('.price-button');
+        priceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                priceButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Here you would typically filter the products based on the selected price range
+                console.log(`Selected price range: ${button.textContent}`);
+            });
+        });
+
+        // Custom Range Popup Functionality
+        function toggleCustomRange() {
+            const popup = document.getElementById('customRangePopup');
+            popup.classList.toggle('show');
+        }
+
+        function applyCustomRange() {
+            const inputs = document.querySelectorAll('.custom-range-input');
+            const minPrice = inputs[0].value;
+            const maxPrice = inputs[1].value;
+
+            if (minPrice && maxPrice) {
+                // Remove active class from all preset range buttons
+                priceButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Here you would typically filter the products based on the custom range
+                console.log(`Applied custom range: $${minPrice} - $${maxPrice}`);
+                
+                // Close the popup
+                toggleCustomRange();
+            }
+        }
+
+        // Close custom range popup when clicking outside
+        document.addEventListener('click', (event) => {
+            const popup = document.getElementById('customRangePopup');
+            const customRangeButton = document.querySelector('.custom-range-button');
+            
+            if (!event.target.closest('.custom-range') && 
+                !event.target.closest('.custom-range-popup')) {
+                popup.classList.remove('show');
+            }
+        });
+
+            </script>
+        </body>
+        </html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase History</title>
+    <style>
+        .purchase-history {
+            background-color: antiquewhite;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .purchase-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .purchase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .purchase-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .rating-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .stars {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .stars span {
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .stars span.active {
+            color: #f1c40f;
+        }
+
+        .review-form {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .review-content {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .status-delivered {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: hotpink;
+            font-weight: bold;
+        }
+
+        .purchase-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-id {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="purchase-history">
+        <h2>Purchase History</h2>
+        <div class="purchase-item">
+            <div class="purchase-header">
+                <div>
+                    <span class="order-id">Order #12345</span>
+                    <span class="purchase-date">Purchased on Nov 15, 2024</span>
+                </div>
+                <span class="order-status status-delivered">Delivered</span>
+            </div>
+            <div class="purchase-details">
+                <img src="/api/placeholder/100/100" alt="Wedding Dress" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Elegant Wedding Dress</h3>
+                    <p class="product-price">$1,999</p>
+                </div>
+            </div>
+            <div class="rating-section" data-order="12345">
+                <div class="stars">
+                    <span data-rating="1">★</span>
+                    <span data-rating="2">★</span>
+                    <span data-rating="3">★</span>
+                    <span data-rating="4">★</span>
+                    <span data-rating="5">★</span>
+                </div>
+                <div class="review-form">
+                    <textarea placeholder="Write your review here..."></textarea>
+                    <button class="btn-primary" onclick="submitReview(12345)">Submit Review</button>
+                </div>
+                <div class="review-content"></div>
+            </div>
+        </div>
+
+        <div class="purchase-item">
+            <div class="purchase-header">
+                <div>
+                    <span class="order-id">Order #12346</span>
+                    <span class="purchase-date">Purchased on Nov 10, 2024</span>
+                </div>
+                <span class="order-status status-delivered">Delivered</span>
+            </div>
+            <div class="purchase-details">
+                <img src="/api/placeholder/100/100" alt="Wedding Ring" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Diamond Wedding Ring</h3>
+                    <p class="product-price">$2,499</p>
+                </div>
+            </div>
+            <div class="rating-section" data-order="12346">
+                <div class="stars">
+                    <span data-rating="1">★</span>
+                    <span data-rating="2">★</span>
+                    <span data-rating="3">★</span>
+                    <span data-rating="4">★</span>
+                    <span data-rating="5">★</span>
+                </div>
+                <div class="review-form">
+                    <textarea placeholder="Write your review here..."></textarea>
+                    <button class="btn-primary" onclick="submitReview(12346)">Submit Review</button>
+                </div>
+                <div class="review-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ratingSection = document.querySelectorAll('.rating-section');
+            
+            ratingSection.forEach(section => {
+                const stars = section.querySelectorAll('.stars span');
+                const reviewForm = section.querySelector('.review-form');
+                let selectedRating = 0;
+
+                stars.forEach(star => {
+                    star.addEventListener('mouseover', function() {
+                        const rating = this.dataset.rating;
+                        highlightStars(stars, rating);
+                    });
+
+                    star.addEventListener('mouseout', function() {
+                        highlightStars(stars, selectedRating);
+                    });
+
+                    star.addEventListener('click', function() {
+                        selectedRating = this.dataset.rating;
+                        highlightStars(stars, selectedRating);
+                        reviewForm.style.display = 'block';
+                    });
+                });
+            });
+        });
+
+        function highlightStars(stars, rating) {
+            stars.forEach(star => {
+                star.classList.toggle('active', star.dataset.rating <= rating);
+            });
+        }
+
+        function submitReview(orderId) {
+            const section = document.querySelector(`.rating-section[data-order="${orderId}"]`);
+            const reviewText = section.querySelector('textarea').value;
+            const rating = section.querySelectorAll('.stars .active').length;
+            
+            if (rating === 0) {
+                alert('Please select a rating before submitting your review.');
+                return;
+            }
+
+            if (reviewText.trim() === '') {
+                alert('Please write a review before submitting.');
+                return;
+            }
+
+            const reviewContent = section.querySelector('.review-content');
+            reviewContent.innerHTML = `
+                <p><strong>Your Rating:</strong> ${rating} stars</p>
+                <p><strong>Your Review:</strong> ${reviewText}</p>
+            `;
+            reviewContent.style.display = 'block';
+            
+            // Hide the review form after submission
+            section.querySelector('.review-form').style.display = 'none';
+            
+            // In a real application, you would send this data to a server
+            console.log('Review submitted:', {
+                orderId: orderId,
+                rating: rating,
+                review: reviewText
+            });
+        }
+    </script>
+</body>
+</html>

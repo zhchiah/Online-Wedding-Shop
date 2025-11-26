@@ -1,0 +1,236 @@
+
+.hover-trigger {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 100vh;
+    z-index: 998;
+}
+
+/* Animated Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: #FFF3E0;
+    padding: 20px 0;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Show sidebar when hovering over trigger area or sidebar itself */
+.hover-trigger:hover + .container .sidebar,
+.sidebar:hover {
+    transform: translateX(250px);
+}
+
+/* Shift main content when sidebar is visible */
+.hover-trigger:hover + .container .main-content,
+.sidebar:hover + .main-content {
+    margin-left: 250px;
+}
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+
+.nav-item {
+    display: block;
+    padding: 15px 20px;
+    color: #666;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.nav-item:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+.nav-item.active {
+    background-color: hotpink;
+    color: white;
+    font-weight: bold;
+}
+
+.main-content {
+flex: 2;
+padding: 10px;
+padding-bottom: 6px;
+margin-left: 0;
+overflow-y: auto; /* Enables vertical scrolling */
+max-height: 100vh; /* Prevents content from exceeding viewport height */
+transition: margin-left 0.3s ease-in-out;
+}
+
+.tab-content {
+    
+    background-color: antiquewhite;
+    border-radius: 20px;
+    padding: 1px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    text-align : center;
+    
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.content {
+    padding-right :50px;
+    position : relative;
+}
+
+.container {
+min-height: 100vh;
+position: relative;
+}
+
+
+.purchase-history {
+    background-color: antiquewhite;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+}
+
+.purchase-item {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.purchase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.purchase-details {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product-info {
+    flex-grow: 1;
+}
+
+.rating-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.stars {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.stars span {
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.stars span.active {
+    color: #f1c40f;
+}
+
+.review-form {
+    margin-top: 15px;
+    display: none;
+}
+
+.review-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.review-content {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    display: none;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.status-delivered {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    color: hotpink;
+    font-weight: bold;
+}
+
+.purchase-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.order-id {
+    color: #666;
+    font-size: 0.9rem;
+}
+.footer {
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+background-color: #FFF3E0;
+padding: 10px 20px;
+text-align: center;
+font-size: 0.9rem;
+color: #666;
+border-top: 1px solid gray;
+z-index: 997;
+transition: margin-left 0.3s ease-in-out;
+ }
+
+.footer p {
+  margin: 5px 0;
+ }
